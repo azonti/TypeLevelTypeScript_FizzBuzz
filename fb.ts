@@ -1,17 +1,24 @@
+// Bool: Truth values
+type Bool = True | False
 type True = "t"
 type False = "f"
-type Bool = True | False
 
-type Not<B extends Bool> = B extends True ? False : True
 
+// Nat: Natural numbers
+type Nat = _0 | Suc_Nat
+interface Suc_Nat extends Suc<Nat> {}
 type _0 =
   { fizz: True, fizz1: False, fizz2: False, 
     buzz: True, buzz1: False, buzz2: False, buzz3: False, buzz4: False }
 type Suc<N extends Nat> =
   { fizz: N["fizz2"], fizz1: N["fizz"], fizz2: N["fizz1"],
     buzz: N["buzz4"], buzz1: N["buzz"], buzz2: N["buzz1"], buzz3: N["buzz2"], buzz4: N["buzz3"] }
-type Nat = _0 | Suc_Nat
-interface Suc_Nat extends Suc<Nat> {}
+
+// FB: Do Fizz Buzz
+type FB<N extends Nat> =
+  N["fizz"] extends True ?
+  N["buzz"] extends True ? "FizzBuzz" : "Fizz" :
+  N["buzz"] extends True ? "Buzz": ""
 
 type _1 = Suc<_0>
 type _2 = Suc<_1>
@@ -29,11 +36,6 @@ type _13 = Suc<_12>
 type _14 = Suc<_13>
 type _15 = Suc<_14>
 type _16 = Suc<_15>
-
-type FB<N extends Nat> =
-  N["fizz"] extends True ?
-  N["buzz"] extends True ? "FizzBuzz" : "Fizz" :
-  N["buzz"] extends True ? "Buzz": ""
 
 const _0: FB<_0> = "FizzBuzz";
 const _1: FB<_1> = "";
